@@ -3,7 +3,6 @@ services:
     name: vitasense-api
     env: node
     rootDir: backend
-    plan: free
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -16,7 +15,6 @@ services:
     name: vitasense-web
     env: static
     rootDir: frontend
-    plan: free
     buildCommand: npm install && npm run build
     staticPublishPath: build
     envVars:
