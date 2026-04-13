@@ -1,111 +1,115 @@
-# Vitamin Deficiency Prediction System
+# VitaSense
 
-A modern full-stack web application that uses machine learning to predict vitamin deficiencies based on lifestyle and health data.
+VitaSense is a full-stack health screening application that estimates potential vitamin deficiencies from lifestyle and wellness inputs. It combines a React frontend, an Express API, and a machine learning workflow to deliver structured risk insights and next-step recommendations.
 
-## 🚀 Features
+## Highlights
 
-- **Modern UI/UX**: Built with React, TypeScript, and Tailwind CSS
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Interactive Forms**: Real-time validation and progress tracking
-- **AI-Powered Predictions**: Machine learning model for vitamin deficiency analysis
-- **Comprehensive Results**: Detailed health recommendations and risk assessment
-- **Educational Content**: Health tips and vitamin information
+- End-to-end prediction flow from user input to recommendation output
+- Responsive React interface with route-based navigation
+- REST API for prediction, authentication, and health checks
+- Reproducible model training and evaluation scripts in Python
+- Render-ready deployment blueprint via `render.yaml`
 
-## 📁 Project Structure
-
-```
-vitamin-ml-project/
-├── frontend/                 # React frontend application
-│   ├── src/
-│   │   ├── components/      # Reusable React components
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # API services
-│   │   ├── App.tsx         # Main App component
-│   │   └── index.tsx       # Entry point
-│   ├── public/             # Static assets
-│   ├── package.json        # Frontend dependencies
-│   └── tailwind.config.js  # Tailwind CSS configuration
-└── backend/                 # Express.js backend API
-    ├── controllers/        # Route controllers
-    ├── routes/            # API routes
-    ├── server.js          # Main server file
-    └── package.json       # Backend dependencies
-```
-
-## 🛠️ Technologies Used
+## System Architecture
 
 ### Frontend
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first CSS framework
-- **React Router** - Client-side routing
-- **Axios** - HTTP client
-- **Lucide React** - Icon library
+
+- React 18 + TypeScript
+- Tailwind CSS for styling
+- Axios-based API communication
+- Route protection and auth context support
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **CORS** - Cross-origin resource sharing
-- **Helmet** - Security headers
-- **Morgan** - HTTP request logger
-- **Rate Limiting** - API rate limiting
 
-## 📋 Pages
+- Node.js + Express
+- Security middleware (`helmet`, rate limiting, CORS)
+- Auth endpoints with token-based flow
+- Prediction and metrics endpoints
 
-1. **Home** - Hero section with introduction and features
-2. **About** - Information about vitamin deficiencies and the system
-3. **Prediction** - Interactive form for health assessment
-4. **Result** - Prediction results with recommendations
-5. **Health Tips** - Educational content and guidelines
+### ML Layer
 
-## 🚀 Getting Started
+- Python utilities for text processing, training, and evaluation
+- Serialized model artifacts under `backend/models/`
+- CLI utilities for local experimentation
+
+## Repository Structure
+
+```text
+VitaSense/
+├── backend/              # Express API + ML scripts + model artifacts
+├── frontend/             # React client application
+├── notebooks/            # Experiment and training notebooks
+├── render.yaml           # Render Blueprint for web + API deployment
+└── README.md
+```
+
+## Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
 
-### Installation
+- Node.js 16+
+- npm 8+
+- Python 3.9+ (for ML utilities)
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd vitamin-ml-project
-   ```
+### 1) Install Dependencies
 
-2. **Install backend dependencies**
-   ```bash
-   cd backend
-   npm install
-   ```
+```bash
+# Backend
+cd backend
+npm install
 
-3. **Install frontend dependencies**
-   ```bash
-   cd ../frontend
-   npm install
-   ```
+# Frontend
+cd ../frontend
+npm install
+```
 
-### Running the Application
+### 2) Configure Environment
 
-1. **Start the backend server**
-   ```bash
-   cd backend
-   npm run dev
-   ```
-   The API will be available at `http://localhost:5000`
+Create `backend/.env` from `backend/.env.example`:
 
-2. **Start the frontend development server**
-   ```bash
-   cd frontend
-   npm start
-   ```
-   The application will be available at `http://localhost:3000`
+```env
+PORT=5000
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:3000
+```
 
-## 📡 API Endpoints
+Optionally create `frontend/.env.development`:
 
-### POST /api/predict
-Predict vitamin deficiency based on health data.
+```env
+REACT_APP_API_URL=http://localhost:5000
+```
 
-**Request Body:**
+### 3) Run Locally
+
+```bash
+# Terminal 1 (backend)
+cd backend
+npm run dev
+
+# Terminal 2 (frontend)
+cd frontend
+npm start
+```
+
+Application URLs:
+
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:5000`
+
+## API Overview
+
+### Health Check
+
+- `GET /api/health`  
+  Returns service availability status.
+
+### Prediction
+
+- `POST /api/predict`  
+  Accepts user health/lifestyle features and returns risk-oriented prediction output.
+
+Example payload:
+
 ```json
 {
   "age": "30",
@@ -120,92 +124,49 @@ Predict vitamin deficiency based on health data.
 }
 ```
 
-**Important medical note:** This is an educational screening tool and not a medical diagnosis. Vitamin deficiency is typically
-confirmed using clinical context and laboratory biomarkers.
+## Model Training and Evaluation
 
-## 📏 Model evaluation
-
-Run per-target metrics (MAE / R²) on a holdout split:
+Run holdout evaluation:
 
 ```bash
 python -m backend.ml.evaluate_model
 ```
 
-Run K-Fold cross validation (example: 5 folds):
+Run k-fold evaluation:
 
 ```bash
 python -m backend.ml.evaluate_model --kfold 5
 ```
 
-**Response:**
-```json
-{
-  "prediction": "Vitamin D Deficiency",
-  "risk": "Medium",
-  "suggestion": "Increase sun exposure and consume vitamin D rich foods",
-  "riskScore": 3,
-  "confidence": "Medium",
-  "timestamp": "2024-01-01T00:00:00.000Z",
-  "factors": ["Low sun exposure", "Vegetarian diet"]
-}
-```
+## Deployment (Render)
 
-### GET /api/health
-Health check endpoint to verify API status.
+This repository includes a Render Blueprint (`render.yaml`) that provisions:
 
-## 🔧 Configuration
+- `vitasense-api` (Node web service from `backend/`)
+- `vitasense-web` (static frontend from `frontend/`)
 
-### Backend Configuration
-Create a `.env` file in the backend directory based on `.env.example`:
+Deploy steps:
 
-```env
-PORT=5000
-NODE_ENV=development
-CORS_ORIGIN=http://localhost:3000
-```
+1. Push this repository to GitHub.
+2. In Render, create a new Blueprint service.
+3. Connect the repository and apply the blueprint.
 
-### Frontend Configuration
-The frontend is configured to work with the backend running on `http://localhost:5000`. Update the API URL in the prediction service if needed.
+## Quality, Security, and Scope
 
-## 🎨 Customization
+- Includes baseline API hardening (Helmet, CORS, rate limiting)
+- Intended for educational screening and product demonstration
+- Not a medical diagnostic system
 
-### Adding New Pages
-1. Create a new component in `frontend/src/pages/`
-2. Add the route in `frontend/src/App.tsx`
-3. Update the navigation in `frontend/src/components/Navbar.tsx`
+## Contributing
 
-### Modifying the Prediction Logic
-The prediction logic is located in `backend/controllers/prediction.js`. This can be replaced with actual ML model integration.
+1. Create a feature branch.
+2. Make focused changes with clear commit messages.
+3. Open a pull request with testing notes.
 
-### Styling
-The application uses Tailwind CSS. Modify `tailwind.config.js` for theme customization.
+## License
 
-## 🔮 Future Enhancements
+This project is licensed under the MIT License. See `LICENSE` if available in the repository.
 
-- Integration with real ML models (Python/Scikit-learn, TensorFlow)
-- User authentication and profile management
-- Database integration for storing predictions
-- Advanced analytics and reporting
-- Mobile application
-- Real-time notifications
-- Multi-language support
+## Medical Disclaimer
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## ⚠️ Disclaimer
-
-This application is for educational purposes only and should not be used as a substitute for professional medical advice. Always consult with qualified healthcare professionals for medical diagnosis and treatment.
-
-## 📞 Support
-
-For support and questions, please open an issue in the GitHub repository.
+VitaSense provides educational risk signals only and does not replace clinical judgment, laboratory testing, or licensed medical advice.
