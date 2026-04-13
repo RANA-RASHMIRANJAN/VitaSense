@@ -1,0 +1,73 @@
+{
+  "type": "screening_regression",
+  "note": "Educational screening model; not a medical diagnostic device.",
+  "overall": {
+    "mae": 18.89665412902832,
+    "r2": 0.5399911403656006
+  },
+  "per_target": [
+    {
+      "target": "vitamin_c_percent_rda",
+      "mae": 22.372251961231232,
+      "r2": 0.4577170046681015
+    },
+    {
+      "target": "folate_percent_rda",
+      "mae": 22.032547499656676,
+      "r2": 0.4403150142016903
+    },
+    {
+      "target": "vitamin_e_percent_rda",
+      "mae": 22.01774248790741,
+      "r2": 0.40986490782217866
+    },
+    {
+      "target": "calcium_percent_rda",
+      "mae": 20.737379528045658,
+      "r2": 0.4385352723759445
+    },
+    {
+      "target": "vitamin_a_percent_rda",
+      "mae": 18.94378266477585,
+      "r2": 0.5064164313066883
+    },
+    {
+      "target": "iron_percent_rda",
+      "mae": 16.120957530975343,
+      "r2": 0.6030770415169396
+    },
+    {
+      "target": "vitamin_d_percent_rda",
+      "mae": 15.639824572944642,
+      "r2": 0.712769301701708
+    },
+    {
+      "target": "vitamin_b12_percent_rda",
+      "mae": 13.308751236915588,
+      "r2": 0.7512343239682476
+    }
+  ],
+  "targets": [
+    "vitamin_a_percent_rda",
+    "vitamin_c_percent_rda",
+    "vitamin_d_percent_rda",
+    "vitamin_e_percent_rda",
+    "vitamin_b12_percent_rda",
+    "folate_percent_rda",
+    "calcium_percent_rda",
+    "iron_percent_rda"
+  ],
+  "features": [
+    "age",
+    "gender",
+    "bmi",
+    "smoking_status",
+    "alcohol_consumption",
+    "exercise_level",
+    "diet_type",
+    "sun_exposure",
+    "stress_level",
+    "latitude_region",
+    "symptoms_list"
+  ]
+}
